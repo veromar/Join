@@ -4,7 +4,9 @@ Un club deportivo municipal nos ha pedido que creemos una aplicación que admini
 En una tabla llamada "deportistas" guardamos los datos personales
 y en una tabla denominada "inscripciones" almacenamos la información necesaria para las
 inscripciones de los deportistas en los distintos deportes.
+
 1- Eliminamos las tablas si existen.
+
 2- Creamos las tablas:
 create table deportistas(
 dni char(8) not null,
@@ -20,6 +22,7 @@ matricula ENUM( 'sí', 'no' ) DEFAULT 'no',
 PRIMARY KEY ( dni, deporte, año ) ,
 FOREIGN KEY ( dni ) REFERENCES deportistas( dni )
 )
+
 3- Ingresamos algunos registros para ambas tablas:
 insert into deportistas values('11122233','Juan Perez','Colón 234');
 insert into deportistas values('22233344','Maria Lopez','Tendezuelas 465');
@@ -32,12 +35,14 @@ insert into inscripciones values ('22233344','tenis','2014','no');
 insert into inscripciones values ('22233344','natacion','2014','si');
 insert into inscripciones values ('33344455','tenis','2013','no');
 insert into inscripciones values ('33344455','basket','2014','no');
+
 4. Realizamos un join normal para saber los deportistas inscritos
 select d.dni,d.nombre,i.deporte,i.año,i.matricula
 from deportistas as d
 join
 inscripciones as i
 on d.dni=i.dni;
+
 5- Realizamos un "left join" de la tabla "deportistas" a "inscripciones" buscando coincidencia de "dni":
 select d.dni,d.nombre,i.deporte,i.año,i.matricula
 from deportistas as d
@@ -45,11 +50,13 @@ left join
 inscripciones as i
 on d.dni=i.dni;
 Notemos que los deportistas que no están inscritosen ningún deporte tienen la fila como "null".
+
 5- Realizamos un "right join" para obtener la misma salida anterior:
 select d.dni,d.nombre,i.deporte,i.año,i.matricula
 from inscripciones as i
 right join deportistas as d
 on d.dni=i.dni;
+
 6. Queremos obtener solamente los no inscritos:
 SELECT d.dni, d.nombre, i.deporte, i.año, i.matricula
 FROM deportistas AS d
