@@ -1,0 +1,75 @@
+Mediante este pequeño actividad veremos cómo realizar joins, ingresar foreign keys y usar alias
+Una empresa tiene registrados sus clientes en una tabla llamada "clientes",
+también tiene una tabla "provincias" donde registra los nombres de las provincias.
+1- Eliminamos la tabla "clientes" y "provincias", si existen:
+drop table if exists clientes, provincias;
+2- Creamos con las siguientes estructuras:
+create table provincias(
+codigo tinyint unsigned auto_increment,
+nombre varchar(20),
+primary key (codigo)
+);
+create table clientes (
+codigo int unsigned auto_increment,
+nombre varchar(30) not null,
+domicilio varchar(30),
+ciudad varchar(20),
+codigoprovincia tinyint unsigned,
+telefono varchar(11),
+primary key(codigo),
+INDEX(ciudad),
+FOREIGN KEY (codigoprovincia) REFERENCES provincias(codigo)
+);
+3- Ingresamos algunos registros para ambas tablas:
+insert into provincias (nombre) values('Toledo');
+insert into provincias (nombre) values('Ciudad Real');
+insert into provincias (nombre) values('Albacete');
+insert into provincias (nombre) values('Cuenca');
+insert into provincias (nombre) values('Guadalajara');
+insert into provincias (nombre) values('Madrid');
+insert into provincias (nombre) values('Ávila');
+insert into clientes (nombre,domicilio,ciudad,codigoProvincia,telefono)
+values ('Lopez Marcos', 'Colón 11', 'Torrijos',1,'null');
+insert into clientes (nombre,domicilio,ciudad,codigoProvincia,telefono)
+values ('Perez Ana', 'San Martín 22', 'Almorox',1,'4578585');
+insert into clientes (nombre,domicilio,ciudad,codigoProvincia,telefono)
+values ('Garcia Juan', 'Rey 33', 'Mocejón',1,'4578445');
+insert into clientes (nombre,domicilio,ciudad,codigoProvincia,telefono)
+values ('Perez Luis', 'Sarmiento 4', 'Almagro',2,null);
+insert into clientes (nombre,domicilio,ciudad,codigoProvincia,telefono)
+values ('Pereyra Lucas', 'Constitución 5', 'Almorox',1,'4253685');
+insert into clientes (nombre,domicilio,ciudad,codigoProvincia,telefono)
+values ('Gomez Ines', 'Guadiana 66', 'Ciudad Real',2,'0345252525');
+insert into clientes (nombre,domicilio,ciudad,codigoProvincia,telefono)
+values ('Torres Fabiola', 'Fernando de Rojas 4', 'Talavera de la Reina',1,'4554455');
+insert into clientes (nombre,domicilio,ciudad,codigoProvincia,telefono)
+values ('Lopez Carlos', 'Río Alberche 25', 'Toledo',1,null);
+insert into clientes (nombre,domicilio,ciudad,codigoProvincia,telefono)
+values ('Ramos Betina', 'Paseo de la Rosa 3', 'Toledo',1,'4223366');
+insert into clientes (nombre,domicilio,ciudad,codigoProvincia,telefono)
+values ('Lopez Lucas', 'Ferrocarril 10', 'Cuenca',4,'0457858745');
+4.Hacemos un join de ambas tablas
+select * from clientes
+join provincias
+on clientes.codigoprovincia=provincias.codigo;
+5.creamos alias de clientes y de provincias
+select * from clientes as c
+join provincias as p
+on c.codigoprovincia=p.codigo;
+6- Obtenemos los datos de ambas tablas, usando alias y haciendo un join:
+select c.nombre,c.domicilio,c.ciudad,p.nombre,c.telefono
+from clientes as c
+join provincias as p
+on c.codigoProvincia=p.codigo;
+7- Obtenemos la misma información anterior pero ordenada por nombre del cliente:
+select c.nombre,c.domicilio,c.ciudad,p.nombre,c.telefono
+from clientes as c
+join provincias as p
+on c.codigoProvincia=p.codigo
+order by c.nombre;
+8- Omitimos la referencia a las tablas en la condición "on" para verificar que la sentencia no se
+ejecuta porque el nombre del campo "codigo" es ambiguo (ambas tablas lo tienen):
+select c.nombre,c.domicilio,c.ciudad,p.nombre,c.telefono
+from clientes as c
+join provincias as p
+on codigoProvincia=codigo
