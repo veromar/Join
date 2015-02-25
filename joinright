@@ -1,5 +1,7 @@
-Trabajamos un poco más el join left, el join right, además con primary key de varias columnas y un foreign key y con is null
-Un club deportivo municipal nos ha pedido que creemos una aplicación que administre sus actividades deportivas. En una tabla llamada "deportistas" guardamos los datos personales
+Trabajamos un poco más el join left, el join right, además con primary key de varias columnas y un foreign key y 
+con is null
+Un club deportivo municipal nos ha pedido que creemos una aplicación que administre sus actividades deportivas. 
+En una tabla llamada "deportistas" guardamos los datos personales
 y en una tabla denominada "inscripciones" almacenamos la información necesaria para las
 inscripciones de los deportistas en los distintos deportes.
 1- Eliminamos las tablas si existen.
